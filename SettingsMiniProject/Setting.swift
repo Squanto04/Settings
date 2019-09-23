@@ -1,9 +1,9 @@
 //
 //  Setting.swift
-//  SettingsMiniProject
+//  Settings
 //
-//  Created by James Pacheco on 4/13/16.
-//  Copyright © 2016 James Pacheco. All rights reserved.
+//  Created by Jordan Lamb on 9/23/19.
+//  Copyright © 2019 James Pacheco. All rights reserved.
 //
 
 import UIKit
@@ -12,22 +12,22 @@ import UIKit
 class Setting {
     /// The String value of the Setting's name
     let name: String
-    /// The UIImage of the Setting
+    /// UIImage of the Setting Object
     var image: UIImage?
-    /// The Boolean value representing the Setting's current state
+    /// Boolean value of the current Setting's state
     var isSet: Bool
     
     /**
-     Initailizes a Setting model object from the given parameters
+     Initalizes a Setting object from the given parameters
      
      - Parameters:
-        - name: String value of the Setting's name
-        - isSet: Boolean representing the Setting's current state, sets default value to false
-        - image: UIImage of the Setting
+        - name: The String value of the Setting's name
+        - image: UIImage of the Setting Object
+        - isSet: Boolean value of the current Setting's state, sets default value to false.
      */
-    init(name: String, isSet: Bool, image: UIImage?) {
+    init(name: String, image: UIImage?, isSet: Bool = false) {
         self.name = name
-        self.isSet = isSet
         self.image = image
+        self.isSet = isSet
     }
 }

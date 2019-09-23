@@ -1,64 +1,64 @@
 //
 //  SettingTableViewCell.swift
-//  SettingsMiniProject
+//  Settings
 //
-//  Created by James Pacheco on 4/13/16.
-//  Copyright © 2016 James Pacheco. All rights reserved.
+//  Created by Jordan Lamb on 9/23/19.
+//  Copyright © 2019 James Pacheco. All rights reserved.
 //
 
 import UIKit
 
-// Step 1 of 5 for Custom Delegate
+/// Step 1 of 5 : Define Protocol
 /**
- Definition of the SettingsTableViewCellDelegate protocol that only classes can conform to.
+ Definition of the SettingTableViewDelegate protocol that only classes can conform to.
  
  - Note:
- A class that conforms to SettingTableViewCellDelegate must implement the settingSwitchValueChanged(_ cell:,selected:) method. Where this is named SettingTableViewCellDelegate, it is not a delegate, just proper naming convention. The class that conforms to this protocol is the delegate.
+ A class that conforms to this protocol you must implement the settingValueChanged(_ cell:selected:) method.
+ Where this is named SettingTableViewCellDelegate, it is not a delegate, this is just proper naming convention. The class that conforms to this protocol is the delegate.
  */
 protocol SettingTableViewCellDelegate: class {
-	func settingValueChanged(_ cell: SettingTableViewCell, selected: Bool)
+    func settingValueChanged(_ cell: SettingTableViewCell, selected: Bool)
 }
 
 class SettingTableViewCell: UITableViewCell {
-    
+
     var setting: Setting? {
         didSet {
-            updateViews()
+            updateView()
         }
     }
     
-    // Step 2 of 5 for Custom Delegate
+    /// Step 2 of 5
     /**
-     Declaration of the delegate variable that will be a class that conforms to SettingTableViewCellDelegate
+     Declatation of the delegate variable that will be a class that conforms to the protocol SettingTableViewCellDelegate.
      
      - Note:
-     We declare the delegate and mark it optional similarly to how we delcare a landing pad. This variable will be set where and when we need it to be. It is marked weak for memory management purposes.
+     We declare the delegate and mark it optional similarly to how we declare a landing pad. This variable will be set where and when we need it to be. It is marked weak for memory management purposes.
      */
     weak var delegate: SettingTableViewCellDelegate?
-    
+
     @IBOutlet weak var iconImageView: UIImageView!
-    @IBOutlet weak var settingLabel: UILabel!
+    @IBOutlet weak var settingNameLabel: UILabel!
     @IBOutlet weak var settingSwitch: UISwitch!
-    
-    // Step 3 of 5 for Custom Delegate
+
+    /// Step 3 of 5
     /**
-     Calling the delegate to perform the SettingTableViewCellDelegate protocol method.
-     
+     Call the delegate to perform the SettingTableViewCellDelegate method.
      - Parameters:
-        - sender: The Switch that is tied to this action
+        - sender: The Switch that is tied to this action.
      
      - Note:
-     When this action is fired, it will tell the delegate to perform the settingSwitchValueChanged(_ cell,:selected:) passing in self (refering to the UITableViewCell) for the cell parameter, and the current value of the settingSwitch outlet for the selected parameter.
+     When this action is fired, it will tell the delegate to perform the settingValueChanged(_ cell:,selected:) passing in self (refering to the UITableViewCell) for the cell parameter, and the current value of the settingSwitch outlet for the selected parameter.
      */
-    @IBAction func settingSwitchValueChanged(_ sender: UISwitch) {
+    @IBAction func settingSwitchValueChanged(_ sender: Any) {
         delegate?.settingValueChanged(self, selected: settingSwitch.isOn)
     }
-    
-    func updateViews() {
-        guard let setting = setting else { return }
+
+    func updateView() {
+        guard let setting = setting else {return}
         iconImageView.image = setting.image
-        settingLabel.text = setting.name
+        settingNameLabel.text = setting.name
         settingSwitch.isOn = setting.isSet
-        backgroundColor = setting.isSet ? .yellow : .white
+        self.backgroundColor = setting.isSet ? .yellow : .white
     }
 }
